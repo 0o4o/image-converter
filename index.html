@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image to Pixel Data</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            padding: 20px; 
+            background: #2c2c2c; 
+            color: white; 
+        }
+        .container { 
+            max-width: 600px; 
+            margin: 0 auto; 
+            background: #3c3c3c; 
+            padding: 20px; 
+            border-radius: 10px; 
+        }
+        input, button { 
+            padding: 10px; 
+            margin: 5px 0; 
+            width: 100%; 
+            border: none; 
+            border-radius: 5px; 
+        }
+        button { 
+            background: #4CAF50; 
+            color: white; 
+            cursor: pointer; 
+        }
+        button:hover { background: #45a049; }
+        #output { 
+            background: #1e1e1e; 
+            padding: 15px; 
+            margin-top: 10px; 
+            border-radius: 5px; 
+            min-height: 100px; 
+            white-space: pre-wrap; 
+            font-family: monospace; 
+        }
+        .preview { max-width: 200px; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Image to Roblox Pixel Data</h1>
+        <p>Convert any image to pixel data for Roblox Canvas</p>
+        
+        <h3>Option 1: Upload Image File</h3>
+        <input type="file" id="fileInput" accept="image/*">
+        
+        <h3>Option 2: Use Image URL</h3>
+        <input type="url" id="urlInput" placeholder="https://i.imgur.com/example.jpg">
+        
+        <button onclick="processImage()">🔄 Process Image</button>
+        
+        <div id="preview"></div>
+        <div id="output">Choose an image to get started...</div>
+        
+        <button onclick="copyToClipboard()" id="copyBtn" style="display:none;">📋 Copy JSON Data</button>
+    </div>
+
+    <script>
+        let imageData = null;
+
+        function processImage() {
+            const file = document.getElementById('fileInput').files[0];
+            const url = document.getElementById('urlInput').value;
+
+            if (file) {
+                processFile(file);
+            } else if (url) {
+                processURL(url);
+            } else {
+                alert('Please select a file or enter a URL');
+            }
+        }
+
+        function processFile(file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                processImageData(e.target.result);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function processURL(url) {
+            processImageData(url);
+        }
+
+        function processImageData(src) {
+            const img = new Image();
+            img.crossOrigin = 'anonymous';
+            
+            img.onload = function() {
+                // Show preview
+                const preview = document.getElementById('preview');
+                preview.innerHTML = `<img src="${src}" class="preview" alt="Preview">`;
+                
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                
+                // Resize if too large
+                let { width, height } = img;
+                const maxDim = 512; // Reduced for better performance
+                
+                if (width > maxDim || height > maxDim) {
+                    const scale = Math.min(maxDim / width, maxDim / height);
+                    width = Math.floor(width * scale);
+                    height = Math.floor(height * scale);
+                }
+                
+                canvas.width = width;
+                canvas.height = height;
+                ctx.drawImage(img, 0, 0, width, height);
+                
+                const imageData = ctx.getImageData(0, 0, width, height);
+                const pixels = [];
+                
+                for (let i = 0; i < imageData.data.length; i += 4) {
+                    pixels.push([
+                        imageData.data[i],     // R
+                        imageData.data[i + 1], // G
+                        imageData.data[i + 2]  // B
+                    ]);
+                }
+                
+                const result = {
+                    Height: height,
+                    Width: width,
+                    Pixels: pixels
+                };
+                
+                window.imageData = JSON.stringify(result);
+                document.getElementById('output').textContent = 
+                    `✅ Success!\nResolution: ${width}x${height}\nPixels: ${pixels.length}\nData size: ${(window.imageData.length/1024).toFixed(1)}KB\n\nReady to copy!`;
+                document.getElementById('copyBtn').style.display = 'block';
+            };
+            
+            img.onerror = function() {
+                document.getElementById('output').textContent = 
+                    '❌ Failed to load image.\nTry a different image or check the URL.';
+            };
+            
+            img.src = src;
+        }
+
+        function copyToClipboard() {
+            if (!window.imageData) {
+                alert('No image data to copy. Process an image first.');
+                return;
+            }
+            
+            navigator.clipboard.writeText(window.imageData).then(() => {
+                alert('✅ Image data copied to clipboard!\nNow paste it in your Roblox script.');
+            });
+        }
+    </script>
+</body>
+</html>
