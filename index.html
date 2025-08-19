@@ -20,7 +20,6 @@
             overflow-x: hidden;
         }
 
-        /* Animated background */
         body::before {
             content: '';
             position: fixed;
@@ -47,7 +46,6 @@
             padding: 2rem 1rem;
         }
 
-        /* Header with staggered animations */
         .header {
             text-align: center;
             margin-bottom: 3rem;
@@ -79,7 +77,6 @@
             animation: fadeInUp 0.8s ease-out 0.6s forwards;
         }
 
-        /* Card with slide-in animation */
         .card {
             background: #1a1a1a;
             border: 1px solid #333333;
@@ -111,7 +108,6 @@
             100% { left: 100%; }
         }
 
-        /* Input sections with staggered fade-in */
         .input-section {
             margin-bottom: 2rem;
             opacity: 0;
@@ -134,7 +130,6 @@
             letter-spacing: 0.025em;
         }
 
-        /* File input with hover animation */
         .file-input-wrapper {
             position: relative;
             margin-bottom: 1rem;
@@ -204,7 +199,6 @@
             z-index: 1;
         }
 
-        /* URL input with focus animation */
         .url-input {
             width: 100%;
             padding: 0.75rem 1rem;
@@ -230,7 +224,6 @@
             color: #737373;
         }
 
-        /* Button with pulse animation */
         .btn {
             width: 100%;
             padding: 0.75rem 1.5rem;
@@ -286,7 +279,6 @@
             pointer-events: none;
         }
 
-        /* Loading spinner with rotation */
         .spinner {
             width: 1rem;
             height: 1rem;
@@ -305,7 +297,6 @@
             opacity: 0.7;
         }
 
-        /* Preview with scale animation */
         .preview {
             margin: 1.5rem 0;
             text-align: center;
@@ -328,7 +319,6 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
         }
 
-        /* Stats with staggered bounce-in */
         .stats-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -380,7 +370,6 @@
             letter-spacing: 0.025em;
         }
 
-        /* Output with typewriter effect */
         .output {
             background: #141414;
             color: #ffffff;
@@ -410,7 +399,6 @@
             animation: shake 0.5s ease-in-out;
         }
 
-        /* Copy button with ripple effect */
         .copy-btn {
             padding: 0.75rem 1.5rem;
             background: #ffffff;
@@ -458,7 +446,12 @@
             height: 200px;
         }
 
-        /* Toast with slide animation */
+        .button-container {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
         .toast {
             position: fixed;
             top: 1rem;
@@ -498,7 +491,6 @@
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
         }
 
-        /* Keyframe animations */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -577,7 +569,6 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             .container {
                 padding: 1rem;
@@ -594,15 +585,21 @@
             .stats-container {
                 grid-template-columns: 1fr;
             }
+
+            .button-container {
+                flex-direction: column;
+            }
+
+            .copy-btn {
+                width: 100%;
+            }
         }
 
-        /* Focus styles for accessibility */
         .file-input:focus + .file-input-label {
             border-color: #ffffff;
             box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2);
         }
 
-        /* Scrollbar styling */
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -623,15 +620,12 @@
 </head>
 <body>
     <div class="container">
-        <!-- Header -->
         <div class="header">
             <h1>Image to Roblox</h1>
             <div class="description">@0o4o</div>
         </div>
 
-        <!-- Main card -->
         <div class="card">
-            <!-- File upload section -->
             <div class="input-section">
                 <h3>Upload Image</h3>
                 <div class="file-input-wrapper">
@@ -643,39 +637,44 @@
                 </div>
             </div>
 
-            <!-- URL input section -->
             <div class="input-section">
                 <h3>Or paste image URL</h3>
                 <input type="url" id="urlInput" class="url-input" placeholder="https://example.com/image.jpg">
             </div>
 
-            <!-- Process button -->
             <button onclick="processImage()" class="btn" id="processBtn">
                 <div class="spinner"></div>
                 <span class="btn-text">Convert Image</span>
             </button>
 
-            <!-- Preview section -->
             <div id="preview" class="preview"></div>
 
-            <!-- Stats section -->
             <div id="statsContainer" class="stats-container"></div>
 
-            <!-- Output section -->
             <div id="output" class="output">
 Ready to convert your image. Select a file or enter a URL above to get started.
 
 Your json output will appear here once processing is complete.
             </div>
 
-            <!-- Copy button -->
-            <button onclick="copyToClipboard()" id="copyBtn" class="copy-btn">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                </svg>
-                Copy to clipboard
-            </button>
+            <div class="button-container">
+                <button onclick="copyToClipboard()" id="copyBtn" class="copy-btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    Copy to clipboard
+                </button>
+                
+                <button onclick="downloadJSON()" id="downloadBtn" class="copy-btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    Download JSON
+                </button>
+            </div>
         </div>
     </div>
 
@@ -765,6 +764,10 @@ Your json output will appear here once processing is complete.
                 
                 window.imageData = JSON.stringify(result);
                 
+                if (window.imageData.length > 1024 * 1024) {
+                    showToast('Large image data - copy might fail on some browsers. Try downloading instead.', 'warning');
+                }
+                
                 const output = document.getElementById('output');
                 output.className = 'output success';
                 output.textContent = `Conversion completed successfully!
@@ -778,8 +781,8 @@ Click "Copy to clipboard" to copy the JSON data.`;
                 
                 showStats(width, height, pixels.length, window.imageData.length);
                 
-                const copyBtn = document.getElementById('copyBtn');
-                copyBtn.classList.add('visible');
+                document.getElementById('copyBtn').classList.add('visible');
+                document.getElementById('downloadBtn').classList.add('visible');
                 
                 hideLoading();
                 showToast('Image converted successfully!', 'success');
@@ -801,6 +804,7 @@ Try a different image or check the URL.`;
                 document.getElementById('preview').classList.remove('visible');
                 document.getElementById('statsContainer').classList.remove('visible');
                 document.getElementById('copyBtn').classList.remove('visible');
+                document.getElementById('downloadBtn').classList.remove('visible');
                 
                 showToast('Failed to load image', 'error');
             };
@@ -833,24 +837,78 @@ Try a different image or check the URL.`;
                 return;
             }
             
-            navigator.clipboard.writeText(window.imageData).then(() => {
-                const copyBtn = document.getElementById('copyBtn');
-                const originalHTML = copyBtn.innerHTML;
-                copyBtn.innerHTML = `
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polyline points="20,6 9,17 4,12"></polyline>
-                    </svg>
-                    Copied!
-                `;
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(window.imageData).then(() => {
+                    handleCopySuccess();
+                }).catch((err) => {
+                    console.error('Clipboard API failed:', err);
+                    copyUsingTextarea();
+                });
+            } else {
+                copyUsingTextarea();
+            }
+        }
+
+        function copyUsingTextarea() {
+            try {
+                const textarea = document.createElement('textarea');
+                textarea.value = window.imageData;
+                textarea.style.position = 'fixed';
+                textarea.style.top = '-9999px';
+                textarea.style.left = '-9999px';
+                document.body.appendChild(textarea);
                 
-                setTimeout(() => {
-                    copyBtn.innerHTML = originalHTML;
-                }, 2000);
+                textarea.select();
+                textarea.setSelectionRange(0, 99999);
                 
-                showToast('Copied to clipboard!', 'success');
-            }).catch(() => {
+                const success = document.execCommand('copy');
+                document.body.removeChild(textarea);
+                
+                if (success) {
+                    handleCopySuccess();
+                } else {
+                    showToast('Failed to copy to clipboard', 'error');
+                }
+            } catch (err) {
+                console.error('Fallback copy failed:', err);
                 showToast('Failed to copy to clipboard', 'error');
-            });
+            }
+        }
+
+        function handleCopySuccess() {
+            const copyBtn = document.getElementById('copyBtn');
+            const originalHTML = copyBtn.innerHTML;
+            copyBtn.innerHTML = `
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="20,6 9,17 4,12"></polyline>
+                </svg>
+                Copied!
+            `;
+            
+            setTimeout(() => {
+                copyBtn.innerHTML = originalHTML;
+            }, 2000);
+            
+            showToast('Copied to clipboard!', 'success');
+        }
+
+        function downloadJSON() {
+            if (!window.imageData) {
+                showToast('No image data to download', 'warning');
+                return;
+            }
+            
+            const blob = new Blob([window.imageData], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'roblox-image-data.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showToast('JSON file downloaded!', 'success');
         }
 
         function showToast(message, type) {
@@ -871,7 +929,6 @@ Try a different image or check the URL.`;
             }, 3000);
         }
 
-        // File input handling
         document.getElementById('fileInput').addEventListener('change', function(e) {
             const label = document.querySelector('.file-input-label');
             if (e.target.files.length > 0) {
@@ -888,7 +945,6 @@ Try a different image or check the URL.`;
             }
         });
 
-        // Clear opposite input when one is used
         document.getElementById('fileInput').addEventListener('change', function() {
             if (this.files.length > 0) {
                 document.getElementById('urlInput').value = '';
@@ -906,7 +962,6 @@ Try a different image or check the URL.`;
             }
         });
 
-        // Enter key support
         document.getElementById('urlInput').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 processImage();
