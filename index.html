@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PixelArt Pro - Image to Roblox Converter</title>
+    <title>Image to Roblox</title>
     <style>
         * {
             margin: 0;
@@ -12,149 +12,76 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', system-ui, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: hsl(0 0% 98%);
+            color: hsl(240 10% 3.9%);
+            line-height: 1.5;
             min-height: 100vh;
-            color: #1d1d1f;
-            line-height: 1.6;
-            overflow-x: hidden;
         }
 
-        /* Glass morphism background */
-        .background-shapes {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        .shape {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 50%;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .shape:nth-child(1) {
-            width: 200px;
-            height: 200px;
-            top: 10%;
-            left: 10%;
-            animation-delay: 0s;
-        }
-
-        .shape:nth-child(2) {
-            width: 150px;
-            height: 150px;
-            top: 60%;
-            right: 10%;
-            animation-delay: 2s;
-        }
-
-        .shape:nth-child(3) {
-            width: 100px;
-            height: 100px;
-            bottom: 20%;
-            left: 20%;
-            animation-delay: 4s;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(5deg); }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
         }
 
         /* Header */
         .header {
             text-align: center;
-            padding: 60px 20px 40px;
-            opacity: 0;
-            animation: fadeInUp 1s ease-out 0.2s forwards;
+            margin-bottom: 3rem;
         }
 
         .header h1 {
-            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-size: 2.5rem;
             font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 16px;
+            color: hsl(240 10% 3.9%);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.025em;
         }
 
         .header .subtitle {
-            font-size: 1.25rem;
-            color: rgba(255, 255, 255, 0.9);
-            font-weight: 400;
-            margin-bottom: 8px;
+            font-size: 1.125rem;
+            color: hsl(240 3.8% 46.1%);
+            margin-bottom: 0.5rem;
         }
 
         .header .description {
-            font-size: 1rem;
-            color: rgba(255, 255, 255, 0.7);
+            color: hsl(240 5% 64.9%);
             max-width: 600px;
             margin: 0 auto;
         }
 
-        /* Main container */
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 20px 60px;
-        }
-
-        /* Glass card */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 24px;
-            padding: 48px;
-            box-shadow: 
-                0 8px 32px rgba(0, 0, 0, 0.1),
-                0 1px 0 rgba(255, 255, 255, 0.5) inset;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            opacity: 0;
-            animation: fadeInUp 1s ease-out 0.4s forwards;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .glass-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 
-                0 16px 40px rgba(0, 0, 0, 0.15),
-                0 1px 0 rgba(255, 255, 255, 0.5) inset;
+        /* Card */
+        .card {
+            background: hsl(0 0% 100%);
+            border: 1px solid hsl(240 5.9% 90%);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
         }
 
         /* Input sections */
         .input-section {
-            margin-bottom: 32px;
-            opacity: 0;
-            animation: fadeInUp 1s ease-out 0.6s forwards;
+            margin-bottom: 2rem;
+        }
+
+        .input-section:last-of-type {
+            margin-bottom: 1.5rem;
         }
 
         .input-section h3 {
-            font-size: 1.125rem;
-            font-weight: 600;
-            color: #1d1d1f;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: hsl(240 10% 3.9%);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
         }
 
-        .section-icon {
-            display: inline-block;
-            font-size: 1.2rem;
-        }
-
-        /* Custom file input */
+        /* File input */
         .file-input-wrapper {
             position: relative;
-            margin-bottom: 20px;
+            margin-bottom: 1rem;
         }
 
         .file-input {
@@ -166,115 +93,119 @@
         }
 
         .file-input-label {
-            display: block;
-            padding: 16px 24px;
-            background: linear-gradient(135deg, #f5f5f7 0%, #e8e8ed 100%);
-            border: 2px dashed #d2d2d7;
-            border-radius: 16px;
-            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            border: 2px dashed hsl(240 5.9% 90%);
+            border-radius: 0.5rem;
             cursor: pointer;
-            transition: all 0.3s ease;
-            color: #86868b;
-            font-weight: 500;
+            transition: all 0.2s ease;
+            background: hsl(0 0% 98%);
+            text-align: center;
         }
 
         .file-input-label:hover {
-            background: linear-gradient(135deg, #e8e8ed 0%, #d2d2d7 100%);
-            border-color: #667eea;
-            color: #667eea;
-            transform: scale(1.02);
+            border-color: hsl(240 5.9% 60%);
+            background: hsl(240 4.8% 95.9%);
+        }
+
+        .file-input-label div {
+            font-weight: 500;
+            color: hsl(240 10% 3.9%);
+            margin-bottom: 0.25rem;
+        }
+
+        .file-input-label small {
+            color: hsl(240 3.8% 46.1%);
+            font-size: 0.875rem;
         }
 
         /* URL input */
         .url-input {
             width: 100%;
-            padding: 16px 20px;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            border-radius: 12px;
-            font-size: 1rem;
-            font-family: inherit;
-            background: rgba(255, 255, 255, 0.8);
-            transition: all 0.3s ease;
+            padding: 0.75rem 1rem;
+            border: 1px solid hsl(240 5.9% 90%);
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            background: hsl(0 0% 100%);
+            transition: all 0.2s ease;
         }
 
         .url-input:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
-            background: rgba(255, 255, 255, 1);
+            border-color: hsl(240 10% 3.9%);
+            box-shadow: 0 0 0 2px hsl(240 10% 3.9% / 0.2);
         }
 
-        /* Process button */
-        .process-btn {
+        .url-input::placeholder {
+            color: hsl(240 3.8% 46.1%);
+        }
+
+        /* Button */
+        .btn {
             width: 100%;
-            padding: 18px 24px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            padding: 0.75rem 1.5rem;
+            background: hsl(240 10% 3.9%);
+            color: hsl(0 0% 98%);
             border: none;
-            border-radius: 14px;
-            font-size: 1.125rem;
-            font-weight: 600;
-            font-family: inherit;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            font-weight: 500;
             cursor: pointer;
-            transition: all 0.3s ease;
-            margin: 24px 0;
+            transition: all 0.2s ease;
+            margin: 1.5rem 0;
             position: relative;
-            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
         }
 
-        .process-btn:hover {
-            transform: scale(1.02);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        .btn:hover {
+            background: hsl(240 10% 3.9% / 0.9);
         }
 
-        .process-btn:active {
-            transform: scale(0.98);
+        .btn:disabled {
+            background: hsl(240 3.8% 46.1%);
+            cursor: not-allowed;
         }
 
-        .process-btn.loading {
+        .btn.loading {
             pointer-events: none;
-        }
-
-        .process-btn .btn-text {
-            transition: opacity 0.3s ease;
-        }
-
-        .process-btn.loading .btn-text {
-            opacity: 0;
         }
 
         /* Loading spinner */
         .spinner {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 24px;
-            height: 24px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-top: 2px solid white;
+            width: 1rem;
+            height: 1rem;
+            border: 2px solid transparent;
+            border-top: 2px solid currentColor;
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            display: none;
         }
 
-        .process-btn.loading .spinner {
-            opacity: 1;
+        .btn.loading .spinner {
+            display: block;
+        }
+
+        .btn.loading .btn-text {
+            opacity: 0.7;
         }
 
         @keyframes spin {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
+            to { transform: rotate(360deg); }
         }
 
-        /* Preview section */
+        /* Preview */
         .preview {
-            margin: 24px 0;
+            margin: 1.5rem 0;
             text-align: center;
             opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s ease;
+            transform: translateY(0.5rem);
+            transition: all 0.3s ease;
         }
 
         .preview.visible {
@@ -283,74 +214,21 @@
         }
 
         .preview img {
-            max-width: 300px;
-            max-height: 200px;
-            border-radius: 16px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(0, 0, 0, 0.1);
+            max-width: 100%;
+            max-height: 12rem;
+            border-radius: 0.5rem;
+            border: 1px solid hsl(240 5.9% 90%);
         }
 
-        /* Output section */
-        .output {
-            background: #1d1d1f;
-            color: #f5f5f7;
-            padding: 24px;
-            border-radius: 16px;
-            font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
-            font-size: 0.875rem;
-            line-height: 1.6;
-            white-space: pre-wrap;
-            margin: 24px 0;
-            min-height: 120px;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .output.success {
-            border-color: #30d158;
-            box-shadow: 0 0 0 1px rgba(48, 209, 88, 0.2);
-        }
-
-        .output.error {
-            border-color: #ff453a;
-            box-shadow: 0 0 0 1px rgba(255, 69, 58, 0.2);
-        }
-
-        /* Copy button */
-        .copy-btn {
-            padding: 14px 28px;
-            background: #30d158;
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 1rem;
-            font-weight: 600;
-            font-family: inherit;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: none;
-        }
-
-        .copy-btn.visible {
-            display: inline-block;
-            opacity: 0;
-            animation: fadeInScale 0.5s ease-out forwards;
-        }
-
-        .copy-btn:hover {
-            background: #28cd41;
-            transform: scale(1.05);
-        }
-
-        /* Stats cards */
+        /* Stats */
         .stats-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
-            margin: 24px 0;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
             opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s ease;
+            transform: translateY(0.5rem);
+            transition: all 0.3s ease;
         }
 
         .stats-container.visible {
@@ -359,62 +237,134 @@
         }
 
         .stat-card {
-            background: rgba(102, 126, 234, 0.1);
-            padding: 20px;
-            border-radius: 16px;
+            background: hsl(0 0% 100%);
+            border: 1px solid hsl(240 5.9% 90%);
+            border-radius: 0.5rem;
+            padding: 1rem;
             text-align: center;
-            border: 1px solid rgba(102, 126, 234, 0.2);
         }
 
         .stat-number {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #667eea;
-            margin-bottom: 4px;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: hsl(240 10% 3.9%);
+            margin-bottom: 0.25rem;
         }
 
         .stat-label {
+            font-size: 0.75rem;
+            color: hsl(240 3.8% 46.1%);
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+        }
+
+        /* Output */
+        .output {
+            background: hsl(240 10% 3.9%);
+            color: hsl(210 40% 98%);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
             font-size: 0.875rem;
-            color: #86868b;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            margin: 1.5rem 0;
+            min-height: 6rem;
+            border: 1px solid hsl(240 3.8% 15%);
+            transition: all 0.2s ease;
+        }
+
+        .output.success {
+            border-color: hsl(142 76% 36%);
+            background: hsl(240 10% 3.9%);
+        }
+
+        .output.error {
+            border-color: hsl(0 84% 60%);
+            background: hsl(240 10% 3.9%);
+        }
+
+        /* Copy button */
+        .copy-btn {
+            padding: 0.75rem 1.5rem;
+            background: hsl(0 0% 100%);
+            color: hsl(240 10% 3.9%);
+            border: 1px solid hsl(240 5.9% 90%);
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
             font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
+        .copy-btn.visible {
+            display: flex;
+            opacity: 0;
+            animation: fadeIn 0.3s ease forwards;
+        }
+
+        .copy-btn:hover {
+            background: hsl(240 4.8% 95.9%);
+            border-color: hsl(240 5.9% 60%);
+        }
+
+        @keyframes fadeIn {
             to {
                 opacity: 1;
-                transform: translateY(0);
             }
         }
 
-        @keyframes fadeInScale {
-            from {
-                opacity: 0;
-                transform: scale(0.9);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
+        /* Toast notifications */
+        .toast {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background: hsl(0 0% 100%);
+            border: 1px solid hsl(240 5.9% 90%);
+            border-radius: 0.5rem;
+            padding: 1rem 1.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            z-index: 1000;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.3s ease;
+            max-width: 24rem;
+            font-size: 0.875rem;
         }
 
-        /* Responsive design */
+        .toast.success {
+            border-color: hsl(142 76% 36%);
+            background: hsl(143 85% 96%);
+            color: hsl(140 100% 27%);
+        }
+
+        .toast.error {
+            border-color: hsl(0 84% 60%);
+            background: hsl(0 93% 94%);
+            color: hsl(0 74% 42%);
+        }
+
+        .toast.warning {
+            border-color: hsl(38 92% 50%);
+            background: hsl(48 96% 89%);
+            color: hsl(32 95% 44%);
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            .glass-card {
-                padding: 32px 24px;
-                margin: 0 16px;
-            }
-
-            .header {
-                padding: 40px 20px 30px;
-            }
-
             .container {
-                padding: 0 0 40px;
+                padding: 1rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
             }
 
             .stats-container {
@@ -422,75 +372,46 @@
             }
         }
 
-        /* Success animation */
-        .success-checkmark {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: #30d158;
-            position: relative;
-            animation: checkmark-scale 0.3s ease-out;
-        }
-
-        .success-checkmark::after {
-            content: '✓';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        @keyframes checkmark-scale {
-            0% { transform: scale(0); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
+        /* Focus styles for accessibility */
+        .file-input:focus + .file-input-label {
+            border-color: hsl(240 10% 3.9%);
+            box-shadow: 0 0 0 2px hsl(240 10% 3.9% / 0.2);
         }
     </style>
 </head>
 <body>
-    <!-- Background shapes -->
-    <div class="background-shapes">
-        <div class="shape"></div>
-        <div class="shape"></div>
-        <div class="shape"></div>
-    </div>
-
-    <!-- Header -->
-    <div class="header">
-        <h1>PixelArt Pro</h1>
-        <div class="subtitle">Image to Roblox Pixel Data</div>
-        <div class="description">Transform any image into pixel data for Roblox Canvas with professional-grade processing</div>
-    </div>
-
-    <!-- Main container -->
     <div class="container">
-        <div class="glass-card">
+        <!-- Header -->
+        <div class="header">
+            <h1>Image to Roblox</h1>
+            <div class="subtitle">transform images into pixel data</div>
+            <div class="description">Convert any image into Roblox Canvas compatible pixel data with ease</div>
+        </div>
+
+        <!-- Main card -->
+        <div class="card">
             <!-- File upload section -->
             <div class="input-section">
-                <h3><span class="section-icon">📁</span> Upload Image File</h3>
+                <h3>Upload Image</h3>
                 <div class="file-input-wrapper">
                     <input type="file" id="fileInput" accept="image/*" class="file-input">
                     <label for="fileInput" class="file-input-label">
-                        <div>Click to select an image file</div>
-                        <small>Supports JPG, PNG, GIF and more</small>
+                        <div>Choose a file</div>
+                        <small>PNG, JPG, GIF up to 10MB</small>
                     </label>
                 </div>
             </div>
 
             <!-- URL input section -->
             <div class="input-section">
-                <h3><span class="section-icon">🌐</span> Or Use Image URL</h3>
+                <h3>Or paste image URL</h3>
                 <input type="url" id="urlInput" class="url-input" placeholder="https://example.com/image.jpg">
             </div>
 
             <!-- Process button -->
-            <button onclick="processImage()" class="process-btn" id="processBtn">
-                <span class="btn-text">🚀 Process Image</span>
+            <button onclick="processImage()" class="btn" id="processBtn">
                 <div class="spinner"></div>
+                <span class="btn-text">Convert Image</span>
             </button>
 
             <!-- Preview section -->
@@ -501,14 +422,18 @@
 
             <!-- Output section -->
             <div id="output" class="output">
-                Select an image file or enter a URL to get started...
-                
-                ✨ Your processed pixel data will appear here
+Ready to convert your image. Select a file or enter a URL above to get started.
+
+Your pixel data will appear here once processing is complete.
             </div>
 
             <!-- Copy button -->
             <button onclick="copyToClipboard()" id="copyBtn" class="copy-btn">
-                📋 Copy Pixel Data
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+                Copy to clipboard
             </button>
         </div>
     </div>
@@ -516,18 +441,18 @@
     <script>
         let imageData = null;
 
-        // Add smooth loading effect to process button
         function showLoading() {
             const btn = document.getElementById('processBtn');
             btn.classList.add('loading');
+            btn.disabled = true;
         }
 
         function hideLoading() {
             const btn = document.getElementById('processBtn');
             btn.classList.remove('loading');
+            btn.disabled = false;
         }
 
-        // Enhanced process image function
         function processImage() {
             const file = document.getElementById('fileInput').files[0];
             const url = document.getElementById('urlInput').value;
@@ -537,7 +462,7 @@
             } else if (url) {
                 processURL(url);
             } else {
-                showAlert('Please select a file or enter a URL', 'warning');
+                showToast('Please select a file or enter a URL', 'warning');
             }
         }
 
@@ -560,7 +485,6 @@
             img.crossOrigin = 'anonymous';
             
             img.onload = function() {
-                // Show preview with animation
                 const preview = document.getElementById('preview');
                 preview.innerHTML = `<img src="${src}" alt="Preview">`;
                 preview.classList.add('visible');
@@ -568,9 +492,8 @@
                 const canvas = document.createElement('canvas');
                 const ctx = canvas.getContext('2d');
                 
-                // Resize if too large
                 let { width, height } = img;
-                const maxDim = 512; // Reduced for better performance
+                const maxDim = 512;
                 
                 if (width > maxDim || height > maxDim) {
                     const scale = Math.min(maxDim / width, maxDim / height);
@@ -587,9 +510,9 @@
                 
                 for (let i = 0; i < imageData.data.length; i += 4) {
                     pixels.push([
-                        imageData.data[i],     // R
-                        imageData.data[i + 1], // G
-                        imageData.data[i + 2]  // B
+                        imageData.data[i],
+                        imageData.data[i + 1],
+                        imageData.data[i + 2]
                     ]);
                 }
                 
@@ -601,47 +524,44 @@
                 
                 window.imageData = JSON.stringify(result);
                 
-                // Show success message with animation
                 const output = document.getElementById('output');
                 output.className = 'output success';
-                output.textContent = `✅ Processing Complete!\
-\
-Your image has been successfully converted to pixel data.\
-Resolution: ${width}x${height}\
-Total Pixels: ${pixels.length.toLocaleString()}\
-Data Size: ${(window.imageData.length/1024).toFixed(1)}KB\
-\
-🎮 Ready for Roblox Canvas!\
-\
-Click "Copy Pixel Data" below to copy the JSON data.`;
+                output.textContent = `Conversion completed successfully!
+
+Resolution: ${width}×${height}
+Total pixels: ${pixels.length.toLocaleString()}
+Data size: ${(window.imageData.length/1024).toFixed(1)}KB
+
+Your pixel data is ready for use in Roblox.
+Click "Copy to clipboard" to copy the JSON data.`;
                 
-                // Show stats with animation
                 showStats(width, height, pixels.length, window.imageData.length);
                 
-                // Show copy button with animation
                 const copyBtn = document.getElementById('copyBtn');
                 copyBtn.classList.add('visible');
                 
                 hideLoading();
+                showToast('Image converted successfully!', 'success');
             };
             
             img.onerror = function() {
                 hideLoading();
                 const output = document.getElementById('output');
                 output.className = 'output error';
-                output.textContent = '❌ Failed to load image.\
-\
-Please check:\
-• The image URL is accessible\
-• The file format is supported\
-• Your internet connection\
-\
-Try a different image or check the URL.';
+                output.textContent = `Failed to load image.
+
+Please check:
+• The image URL is accessible
+• The file format is supported
+• Your internet connection
+
+Try a different image or check the URL.`;
                 
-                // Hide other elements
                 document.getElementById('preview').classList.remove('visible');
                 document.getElementById('statsContainer').classList.remove('visible');
                 document.getElementById('copyBtn').classList.remove('visible');
+                
+                showToast('Failed to load image', 'error');
             };
             
             img.src = src;
@@ -660,7 +580,7 @@ Try a different image or check the URL.';
                 </div>
                 <div class="stat-card">
                     <div class="stat-number">${(dataSize/1024).toFixed(1)}KB</div>
-                    <div class="stat-label">Data Size</div>
+                    <div class="stat-label">Size</div>
                 </div>
             `;
             statsContainer.classList.add('visible');
@@ -668,85 +588,66 @@ Try a different image or check the URL.';
 
         function copyToClipboard() {
             if (!window.imageData) {
-                showAlert('No image data to copy. Process an image first.', 'warning');
+                showToast('No image data to copy', 'warning');
                 return;
             }
             
             navigator.clipboard.writeText(window.imageData).then(() => {
-                // Show success feedback
                 const copyBtn = document.getElementById('copyBtn');
-                const originalText = copyBtn.innerHTML;
-                copyBtn.innerHTML = '<span class="success-checkmark"></span> Copied!';
-                copyBtn.style.background = '#30d158';
+                const originalHTML = copyBtn.innerHTML;
+                copyBtn.innerHTML = `
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="20,6 9,17 4,12"></polyline>
+                    </svg>
+                    Copied!
+                `;
                 
                 setTimeout(() => {
-                    copyBtn.innerHTML = originalText;
-                    copyBtn.style.background = '';
+                    copyBtn.innerHTML = originalHTML;
                 }, 2000);
                 
-                showAlert('✅ Pixel data copied to clipboard!\
-Paste it directly into your Roblox script.', 'success');
+                showToast('Copied to clipboard!', 'success');
             }).catch(() => {
-                showAlert('Failed to copy to clipboard. Please try again.', 'error');
+                showToast('Failed to copy to clipboard', 'error');
             });
         }
 
-        function showAlert(message, type) {
-            // Create a toast notification
+        function showToast(message, type) {
             const toast = document.createElement('div');
-            toast.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: ${type === 'success' ? '#30d158' : type === 'warning' ? '#ff9500' : '#ff453a'};
-                color: white;
-                padding: 16px 24px;
-                border-radius: 12px;
-                font-family: inherit;
-                font-weight: 500;
-                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-                z-index: 1000;
-                opacity: 0;
-                transform: translateX(100%);
-                transition: all 0.3s ease;
-                max-width: 400px;
-                word-wrap: break-word;
-            `;
+            toast.className = `toast ${type}`;
             toast.textContent = message;
             document.body.appendChild(toast);
             
-            // Animate in
             setTimeout(() => {
                 toast.style.opacity = '1';
                 toast.style.transform = 'translateX(0)';
             }, 100);
             
-            // Animate out and remove
             setTimeout(() => {
                 toast.style.opacity = '0';
                 toast.style.transform = 'translateX(100%)';
                 setTimeout(() => toast.remove(), 300);
-            }, 4000);
+            }, 3000);
         }
 
-        // File input change handler for better UX
+        // File input handling
         document.getElementById('fileInput').addEventListener('change', function(e) {
             const label = document.querySelector('.file-input-label');
             if (e.target.files.length > 0) {
                 const fileName = e.target.files[0].name;
                 label.innerHTML = `
-                    <div style="color: #667eea; font-weight: 600;">✓ ${fileName}</div>
-                    <small>Click to select a different file</small>
+                    <div>${fileName}</div>
+                    <small>Click to choose a different file</small>
                 `;
             } else {
                 label.innerHTML = `
-                    <div>Click to select an image file</div>
-                    <small>Supports JPG, PNG, GIF and more</small>
+                    <div>Choose a file</div>
+                    <small>PNG, JPG, GIF up to 10MB</small>
                 `;
             }
         });
 
-        // Clear URL when file is selected and vice versa
+        // Clear opposite input when one is used
         document.getElementById('fileInput').addEventListener('change', function() {
             if (this.files.length > 0) {
                 document.getElementById('urlInput').value = '';
@@ -758,13 +659,13 @@ Paste it directly into your Roblox script.', 'success');
                 document.getElementById('fileInput').value = '';
                 const label = document.querySelector('.file-input-label');
                 label.innerHTML = `
-                    <div>Click to select an image file</div>
-                    <small>Supports JPG, PNG, GIF and more</small>
+                    <div>Choose a file</div>
+                    <small>PNG, JPG, GIF up to 10MB</small>
                 `;
             }
         });
 
-        // Enter key support for URL input
+        // Enter key support
         document.getElementById('urlInput').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 processImage();
