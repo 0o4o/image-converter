@@ -13,8 +13,8 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background-color: hsl(240 10% 3.9%);
-            color: hsl(0 0% 98%);
+            background-color: #0a0a0a;
+            color: #ffffff;
             line-height: 1.5;
             min-height: 100vh;
             overflow-x: hidden;
@@ -29,9 +29,9 @@
             width: 100%;
             height: 100%;
             background: 
-                radial-gradient(circle at 20% 50%, hsl(240 100% 20% / 0.3) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, hsl(260 100% 25% / 0.3) 0%, transparent 50%),
-                radial-gradient(circle at 40% 80%, hsl(220 100% 15% / 0.3) 0%, transparent 50%);
+                radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(255, 255, 255, 0.02) 0%, transparent 50%);
             z-index: -1;
             animation: gradientShift 15s ease-in-out infinite;
         }
@@ -56,7 +56,7 @@
         .header h1 {
             font-size: 2.5rem;
             font-weight: 700;
-            color: hsl(0 0% 98%);
+            color: #ffffff;
             margin-bottom: 0.5rem;
             letter-spacing: -0.025em;
             opacity: 0;
@@ -65,14 +65,14 @@
 
         .header .subtitle {
             font-size: 1.125rem;
-            color: hsl(240 5% 64.9%);
+            color: #a3a3a3;
             margin-bottom: 0.5rem;
             opacity: 0;
             animation: fadeInUp 0.8s ease-out 0.4s forwards;
         }
 
         .header .description {
-            color: hsl(240 5% 64.9%);
+            color: #737373;
             max-width: 600px;
             margin: 0 auto;
             opacity: 0;
@@ -81,13 +81,13 @@
 
         /* Card with slide-in animation */
         .card {
-            background: hsl(240 10% 8%);
-            border: 1px solid hsl(240 5% 15%);
+            background: #1a1a1a;
+            border: 1px solid #333333;
             border-radius: 0.75rem;
             padding: 2rem;
             box-shadow: 
-                0 4px 6px -1px rgba(0, 0, 0, 0.3), 
-                0 2px 4px -1px rgba(0, 0, 0, 0.2);
+                0 4px 6px -1px rgba(0, 0, 0, 0.5), 
+                0 2px 4px -1px rgba(0, 0, 0, 0.3);
             opacity: 0;
             animation: slideInUp 0.8s ease-out 0.8s forwards;
             position: relative;
@@ -101,7 +101,7 @@
             left: -100%;
             width: 100%;
             height: 2px;
-            background: linear-gradient(90deg, transparent, hsl(240 100% 70%), transparent);
+            background: linear-gradient(90deg, transparent, #ffffff, transparent);
             animation: shimmer 3s ease-in-out infinite;
         }
 
@@ -128,7 +128,7 @@
         .input-section h3 {
             font-size: 0.875rem;
             font-weight: 500;
-            color: hsl(0 0% 98%);
+            color: #ffffff;
             margin-bottom: 0.5rem;
             text-transform: uppercase;
             letter-spacing: 0.025em;
@@ -154,11 +154,11 @@
             align-items: center;
             justify-content: center;
             padding: 2rem;
-            border: 2px dashed hsl(240 5% 25%);
+            border: 2px dashed #404040;
             border-radius: 0.5rem;
             cursor: pointer;
             transition: all 0.3s ease;
-            background: hsl(240 10% 6%);
+            background: #141414;
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -171,7 +171,7 @@
             left: 50%;
             width: 0;
             height: 0;
-            background: radial-gradient(circle, hsl(240 100% 70% / 0.1) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
             transition: all 0.3s ease;
             transform: translate(-50%, -50%);
             border-radius: 50%;
@@ -183,22 +183,22 @@
         }
 
         .file-input-label:hover {
-            border-color: hsl(240 100% 70%);
-            background: hsl(240 10% 8%);
+            border-color: #ffffff;
+            background: #1f1f1f;
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
         }
 
         .file-input-label div {
             font-weight: 500;
-            color: hsl(0 0% 98%);
+            color: #ffffff;
             margin-bottom: 0.25rem;
             position: relative;
             z-index: 1;
         }
 
         .file-input-label small {
-            color: hsl(240 5% 64.9%);
+            color: #a3a3a3;
             font-size: 0.875rem;
             position: relative;
             z-index: 1;
@@ -208,35 +208,35 @@
         .url-input {
             width: 100%;
             padding: 0.75rem 1rem;
-            border: 1px solid hsl(240 5% 25%);
+            border: 1px solid #404040;
             border-radius: 0.375rem;
             font-size: 0.875rem;
-            background: hsl(240 10% 6%);
-            color: hsl(0 0% 98%);
+            background: #141414;
+            color: #ffffff;
             transition: all 0.3s ease;
             position: relative;
         }
 
         .url-input:focus {
             outline: none;
-            border-color: hsl(240 100% 70%);
+            border-color: #ffffff;
             box-shadow: 
-                0 0 0 2px hsl(240 100% 70% / 0.2),
-                0 0 20px hsl(240 100% 70% / 0.1);
+                0 0 0 2px rgba(255, 255, 255, 0.2),
+                0 0 20px rgba(255, 255, 255, 0.1);
             transform: translateY(-1px);
         }
 
         .url-input::placeholder {
-            color: hsl(240 5% 64.9%);
+            color: #737373;
         }
 
         /* Button with pulse animation */
         .btn {
             width: 100%;
             padding: 0.75rem 1.5rem;
-            background: linear-gradient(45deg, hsl(240 100% 70%), hsl(260 100% 75%));
-            color: hsl(0 0% 98%);
-            border: none;
+            background: linear-gradient(45deg, #000000, #333333);
+            color: #ffffff;
+            border: 1px solid #ffffff;
             border-radius: 0.375rem;
             font-size: 0.875rem;
             font-weight: 500;
@@ -270,12 +270,14 @@
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.4);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
             animation: pulse 1.5s infinite;
+            background: linear-gradient(45deg, #333333, #555555);
         }
 
         .btn:disabled {
-            background: hsl(240 5% 25%);
+            background: #404040;
+            border-color: #404040;
             cursor: not-allowed;
             animation: none;
         }
@@ -322,8 +324,8 @@
             max-width: 100%;
             max-height: 12rem;
             border-radius: 0.5rem;
-            border: 1px solid hsl(240 5% 25%);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid #404040;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
         }
 
         /* Stats with staggered bounce-in */
@@ -343,8 +345,8 @@
         }
 
         .stat-card {
-            background: hsl(240 10% 6%);
-            border: 1px solid hsl(240 5% 20%);
+            background: #141414;
+            border: 1px solid #333333;
             border-radius: 0.5rem;
             padding: 1rem;
             text-align: center;
@@ -360,28 +362,28 @@
 
         .stat-card:hover {
             transform: translateY(-4px) scale(1.05);
-            border-color: hsl(240 100% 70%);
-            box-shadow: 0 8px 25px rgba(124, 58, 237, 0.2);
+            border-color: #ffffff;
+            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.1);
         }
 
         .stat-number {
             font-size: 1.25rem;
             font-weight: 600;
-            color: hsl(240 100% 80%);
+            color: #ffffff;
             margin-bottom: 0.25rem;
         }
 
         .stat-label {
             font-size: 0.75rem;
-            color: hsl(240 5% 64.9%);
+            color: #a3a3a3;
             text-transform: uppercase;
             letter-spacing: 0.025em;
         }
 
         /* Output with typewriter effect */
         .output {
-            background: hsl(240 10% 6%);
-            color: hsl(210 40% 98%);
+            background: #141414;
+            color: #ffffff;
             padding: 1.5rem;
             border-radius: 0.5rem;
             font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
@@ -390,30 +392,30 @@
             white-space: pre-wrap;
             margin: 1.5rem 0;
             min-height: 6rem;
-            border: 1px solid hsl(240 5% 20%);
+            border: 1px solid #333333;
             transition: all 0.3s ease;
             position: relative;
         }
 
         .output.success {
-            border-color: hsl(142 76% 36%);
-            background: hsl(240 10% 6%);
-            box-shadow: 0 0 20px hsl(142 76% 36% / 0.2);
+            border-color: #ffffff;
+            background: #141414;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
         }
 
         .output.error {
-            border-color: hsl(0 84% 60%);
-            background: hsl(240 10% 6%);
-            box-shadow: 0 0 20px hsl(0 84% 60% / 0.2);
+            border-color: #ffffff;
+            background: #141414;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
             animation: shake 0.5s ease-in-out;
         }
 
         /* Copy button with ripple effect */
         .copy-btn {
             padding: 0.75rem 1.5rem;
-            background: hsl(142 76% 36%);
-            color: hsl(0 0% 98%);
-            border: none;
+            background: #ffffff;
+            color: #000000;
+            border: 1px solid #ffffff;
             border-radius: 0.375rem;
             font-size: 0.875rem;
             font-weight: 500;
@@ -433,9 +435,9 @@
         }
 
         .copy-btn:hover {
-            background: hsl(142 76% 32%);
+            background: #f0f0f0;
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(34, 197, 94, 0.3);
+            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.3);
         }
 
         .copy-btn::after {
@@ -445,7 +447,7 @@
             left: 50%;
             width: 0;
             height: 0;
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(0, 0, 0, 0.1);
             border-radius: 50%;
             transform: translate(-50%, -50%);
             transition: width 0.3s, height 0.3s;
@@ -461,39 +463,39 @@
             position: fixed;
             top: 1rem;
             right: 1rem;
-            background: hsl(240 10% 8%);
-            border: 1px solid hsl(240 5% 25%);
+            background: #1a1a1a;
+            border: 1px solid #404040;
             border-radius: 0.5rem;
             padding: 1rem 1.5rem;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.7), 0 4px 6px -2px rgba(0, 0, 0, 0.5);
             z-index: 1000;
             opacity: 0;
             transform: translateX(100%) scale(0.9);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             max-width: 24rem;
             font-size: 0.875rem;
-            color: hsl(0 0% 98%);
+            color: #ffffff;
         }
 
         .toast.success {
-            border-color: hsl(142 76% 36%);
-            background: hsl(240 10% 8%);
-            color: hsl(142 76% 70%);
-            box-shadow: 0 0 20px hsl(142 76% 36% / 0.3);
+            border-color: #ffffff;
+            background: #1a1a1a;
+            color: #ffffff;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
         }
 
         .toast.error {
-            border-color: hsl(0 84% 60%);
-            background: hsl(240 10% 8%);
-            color: hsl(0 84% 70%);
-            box-shadow: 0 0 20px hsl(0 84% 60% / 0.3);
+            border-color: #ffffff;
+            background: #1a1a1a;
+            color: #ffffff;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
         }
 
         .toast.warning {
-            border-color: hsl(38 92% 50%);
-            background: hsl(240 10% 8%);
-            color: hsl(38 92% 70%);
-            box-shadow: 0 0 20px hsl(38 92% 50% / 0.3);
+            border-color: #ffffff;
+            background: #1a1a1a;
+            color: #ffffff;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
         }
 
         /* Keyframe animations */
@@ -596,8 +598,8 @@
 
         /* Focus styles for accessibility */
         .file-input:focus + .file-input-label {
-            border-color: hsl(240 100% 70%);
-            box-shadow: 0 0 0 2px hsl(240 100% 70% / 0.2);
+            border-color: #ffffff;
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2);
         }
 
         /* Scrollbar styling */
@@ -606,16 +608,16 @@
         }
 
         ::-webkit-scrollbar-track {
-            background: hsl(240 10% 6%);
+            background: #141414;
         }
 
         ::-webkit-scrollbar-thumb {
-            background: hsl(240 5% 25%);
+            background: #404040;
             border-radius: 4px;
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: hsl(240 100% 70%);
+            background: #ffffff;
         }
     </style>
 </head>
@@ -624,7 +626,6 @@
         <!-- Header -->
         <div class="header">
             <h1>Image to Roblox</h1>
-            <div class="subtitle">convert any image into json compatible pixel data with ease</div>
             <div class="description">@0o4o</div>
         </div>
 
