@@ -414,6 +414,7 @@
             gap: 0.5rem;
             position: relative;
             overflow: hidden;
+            flex: 1;
         }
 
         .copy-btn.visible {
@@ -426,6 +427,13 @@
             background: #f0f0f0;
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(255, 255, 255, 0.3);
+        }
+
+        .copy-btn:disabled {
+            background: #404040;
+            color: #a3a3a3;
+            border-color: #404040;
+            cursor: not-allowed;
         }
 
         .copy-btn::after {
@@ -450,6 +458,68 @@
             display: flex;
             gap: 1rem;
             margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .temp-link-container {
+            background: #1a1a1a;
+            border: 1px solid #404040;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-top: 1rem;
+            text-align: center;
+            opacity: 0;
+            animation: slideInUp 0.5s ease-out forwards;
+        }
+
+        .temp-link-container .link-display {
+            background: #141414;
+            border: 1px solid #333333;
+            border-radius: 0.375rem;
+            padding: 0.75rem;
+            margin: 1rem 0;
+            word-break: break-all;
+            font-family: monospace;
+            color: #ffffff;
+            font-size: 0.875rem;
+        }
+
+        .temp-link-container .link-buttons {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .temp-link-container button {
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            font-weight: 500;
+            border: 1px solid;
+            transition: all 0.3s ease;
+        }
+
+        .temp-link-container .primary-btn {
+            background: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+        }
+
+        .temp-link-container .primary-btn:hover {
+            background: #f0f0f0;
+            transform: translateY(-2px);
+        }
+
+        .temp-link-container .secondary-btn {
+            background: transparent;
+            color: #ffffff;
+            border-color: #404040;
+        }
+
+        .temp-link-container .secondary-btn:hover {
+            border-color: #ffffff;
+            transform: translateY(-2px);
         }
 
         .toast {
@@ -593,6 +663,14 @@
             .copy-btn {
                 width: 100%;
             }
+
+            .temp-link-container .link-buttons {
+                flex-direction: column;
+            }
+
+            .temp-link-container button {
+                width: 100%;
+            }
         }
 
         .file-input:focus + .file-input-label {
@@ -673,6 +751,14 @@ Your json output will appear here once processing is complete.
                         <line x1="12" y1="15" x2="12" y2="3"></line>
                     </svg>
                     Download JSON
+                </button>
+
+                <button onclick="createTempLink()" id="tempLinkBtn" class="copy-btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.53 1.53"></path>
+                        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.53-1.53"></path>
+                    </svg>
+                    Create Temporary Link
                 </button>
             </div>
         </div>
@@ -765,7 +851,7 @@ Your json output will appear here once processing is complete.
                 window.imageData = JSON.stringify(result);
                 
                 if (window.imageData.length > 1024 * 1024) {
-                    showToast('Large image data - copy might fail on some browsers. Try downloading instead.', 'warning');
+                    showToast('Large image data - copy might fail on some browsers. Try downloading or creating a temporary link instead.', 'warning');
                 }
                 
                 const output = document.getElementById('output');
@@ -777,12 +863,13 @@ Total pixels: ${pixels.length.toLocaleString()}
 Data size: ${(window.imageData.length/1024).toFixed(1)}KB
 
 Your image is ready for use in Roblox.
-Click "Copy to clipboard" to copy the JSON data.`;
+Choose an option below to share or save the JSON data.`;
                 
                 showStats(width, height, pixels.length, window.imageData.length);
                 
                 document.getElementById('copyBtn').classList.add('visible');
                 document.getElementById('downloadBtn').classList.add('visible');
+                document.getElementById('tempLinkBtn').classList.add('visible');
                 
                 hideLoading();
                 showToast('Image converted successfully!', 'success');
@@ -805,6 +892,13 @@ Try a different image or check the URL.`;
                 document.getElementById('statsContainer').classList.remove('visible');
                 document.getElementById('copyBtn').classList.remove('visible');
                 document.getElementById('downloadBtn').classList.remove('visible');
+                document.getElementById('tempLinkBtn').classList.remove('visible');
+                
+                // Remove any existing temp link containers
+                const existingContainer = document.querySelector('.temp-link-container');
+                if (existingContainer) {
+                    existingContainer.remove();
+                }
                 
                 showToast('Failed to load image', 'error');
             };
@@ -909,6 +1003,116 @@ Try a different image or check the URL.`;
             URL.revokeObjectURL(url);
             
             showToast('JSON file downloaded!', 'success');
+        }
+
+        async function createTempLink() {
+            if (!window.imageData) {
+                showToast('No image data to share', 'warning');
+                return;
+            }
+            
+            const tempLinkBtn = document.getElementById('tempLinkBtn');
+            const originalHTML = tempLinkBtn.innerHTML;
+            
+            // Show loading state
+            tempLinkBtn.innerHTML = `
+                <div class="spinner" style="display: block;"></div>
+                Creating link...
+            `;
+            tempLinkBtn.disabled = true;
+            
+            try {
+                // Create a blob from the JSON data
+                const blob = new Blob([window.imageData], { type: 'application/json' });
+                const formData = new FormData();
+                formData.append('file', blob, 'roblox-image-data.json');
+                
+                // Upload to file.io (free temporary file hosting)
+                const response = await fetch('https://file.io/', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Remove any existing link containers
+                    const existingContainer = document.querySelector('.temp-link-container');
+                    if (existingContainer) {
+                        existingContainer.remove();
+                    }
+                    
+                    // Create a more user-friendly display
+                    const linkContainer = document.createElement('div');
+                    linkContainer.className = 'temp-link-container';
+                    
+                    linkContainer.innerHTML = `
+                        <div style="color: #ffffff; font-weight: 500; margin-bottom: 0.5rem;">
+                            Temporary Link Created! 🎉
+                        </div>
+                        <div style="color: #a3a3a3; font-size: 0.875rem; margin-bottom: 1rem;">
+                            This link will expire after first download or in 14 days
+                        </div>
+                        <div class="link-display">${result.link}</div>
+                        <div class="link-buttons">
+                            <button onclick="copyTempLink('${result.link}')" class="primary-btn">
+                                Copy Link
+                            </button>
+                            <button onclick="openTempLink('${result.link}')" class="secondary-btn">
+                                Open Link
+                            </button>
+                        </div>
+                    `;
+                    
+                    document.querySelector('.button-container').insertAdjacentElement('afterend', linkContainer);
+                    
+                    showToast('Temporary link created successfully!', 'success');
+                } else {
+                    throw new Error(result.message || 'Failed to create temporary link');
+                }
+                
+            } catch (error) {
+                console.error('Error creating temporary link:', error);
+                showToast('Failed to create temporary link. Try downloading instead.', 'error');
+            } finally {
+                // Restore button
+                tempLinkBtn.innerHTML = originalHTML;
+                tempLinkBtn.disabled = false;
+            }
+        }
+
+        function copyTempLink(link) {
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(link).then(() => {
+                    showToast('Link copied to clipboard!', 'success');
+                }).catch(() => {
+                    fallbackCopyLink(link);
+                });
+            } else {
+                fallbackCopyLink(link);
+            }
+        }
+
+        function fallbackCopyLink(link) {
+            const textarea = document.createElement('textarea');
+            textarea.value = link;
+            textarea.style.position = 'fixed';
+            textarea.style.top = '-9999px';
+            document.body.appendChild(textarea);
+            textarea.select();
+            
+            try {
+                document.execCommand('copy');
+                showToast('Link copied to clipboard!', 'success');
+            } catch (err) {
+                showToast('Failed to copy link', 'error');
+            }
+            
+            document.body.removeChild(textarea);
+        }
+
+        function openTempLink(link) {
+            window.open(link, '_blank');
         }
 
         function showToast(message, type) {
